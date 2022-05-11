@@ -21,7 +21,6 @@ import sample.logic.services.IPersonaServices;
 import sample.logic.services.PersonaException;
 import sample.logic.services.implementation.PersonaServices;
 
-import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -37,9 +36,13 @@ public class DataScene extends Application {
     private IPersonaServices personaServices;
     private ConfirmationScene confirmationScene;
 
-    private GridPane pane;
-    private Text name;
+    private VBox layout;
+    BorderPane menuBar;
+    private GridPane pane, checkBox;
+    private Text name, district, id, cityName, population, countryCode;
     private MenuBar bar;
+    private CheckBox checkBoxDistrict, checkBoxID, checkBoxName, checkBoxPopulation, checkBoxCountryCode;
+    private TextField inputId, inputCountryCode, inputDistrict, inputName, inputPopulation;
     private Map<String, MenuItem> menuItems;
 
     public static final Font FONT = new Font("DIALOG", 15);
@@ -143,14 +146,15 @@ public class DataScene extends Application {
         setUpTable();
         setUpMenu();
         setUpPane();
+        setUpCheckBox();
+        setUpLabel();
+        setUpInputs();
 
-        BorderPane menuBar = new BorderPane();
+        menuBar = new BorderPane();
         menuBar.setPadding(new Insets(-10));
         menuBar.setTop(bar);
 
-        VBox layout = new VBox(20);
-        layout.setPadding(new Insets(10, 10, 10, 10));
-        layout.getChildren().addAll(menuBar, pane);
+        setUpLayout();
 
         dataScene = new Scene(layout, 950, 450);
     }
@@ -160,11 +164,9 @@ public class DataScene extends Application {
      */
     public void setUpPane() {
         pane = new GridPane();
-        pane.setAlignment(Pos.CENTER_LEFT);
+        pane.setAlignment(Pos.CENTER);
         pane.setVgap(20);
         pane.setHgap(20);
-
-        pane.add(table, 0, 0);
     }
 
     /**
@@ -190,6 +192,59 @@ public class DataScene extends Application {
 
         bar = new MenuBar();
         bar.getMenus().addAll(fileMenu, editMenu, resumeMenu, aboutMenu);
+    }
+
+    public void setUpCheckBox() {
+        checkBoxID = new CheckBox();
+        pane.add(checkBoxID,0,0);
+
+        checkBoxCountryCode = new CheckBox();
+        pane.add(checkBoxCountryCode,0,1);
+
+        checkBoxDistrict = new CheckBox();
+        pane.add(checkBoxDistrict,0,2);
+
+        checkBoxName = new CheckBox();
+        pane.add(checkBoxName,0,3);
+
+        checkBoxPopulation = new CheckBox();
+        pane.add(checkBoxPopulation,0,4);
+    }
+
+    public void setUpLabel() {
+        id = new Text("ID:");
+        id.setFont(FONT);
+        pane.add(id,1,0);
+
+        countryCode = new Text("Codigo:");
+        countryCode.setFont(FONT);
+        pane.add(countryCode,1,1);
+
+        district = new Text("Distrito:");
+        district.setFont(FONT);
+        pane.add(district,1,2);
+
+        cityName = new Text("Nombre:");
+        cityName.setFont(FONT);
+        pane.add(cityName,1,3);
+
+        population = new Text("Población:");
+        population.setFont(FONT);
+        pane.add(population,1,4);
+    }
+
+    public void setUpInputs () {
+        inputId = new TextField();
+        inputDistrict = new TextField();
+        inputCountryCode = new TextField();
+        inputName = new TextField();
+        inputPopulation = new TextField();
+
+        pane.add(inputId, 2,0);
+        pane.add(inputDistrict, 2,0);
+        pane.add(inputCountryCode, 2,0);
+        pane.add(inputName, 2,0);
+        pane.add(inputPopulation, 2,0);
     }
 
     /**
@@ -218,6 +273,14 @@ public class DataScene extends Application {
         table.getColumns().addAll(nameColumn, lastNameColumn, idColumn);
         table.setMaxWidth(450);
     }
+
+    private void setUpLayout() {
+        layout = new VBox(20);
+        layout.setPadding(new Insets(10, 10, 10, 10));
+        layout.getChildren().addAll(menuBar, pane);
+    }
+
+
 
     public static void main(String[] args) {
         launch(args);

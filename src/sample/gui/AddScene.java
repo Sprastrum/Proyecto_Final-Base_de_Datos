@@ -62,7 +62,6 @@ public class AddScene extends SetUp {
             confirmationScene = new ConfirmationScene(stage, "Agregar");
 
             if(confirmationScene.getConfirmation()) {
-
                 try {
                     boolean isPublicEmployee = false;
                     for (ValidPublicEmployees v : ValidPublicEmployees.values()) {
@@ -116,7 +115,7 @@ public class AddScene extends SetUp {
         Map<Label, String> list = labelsList();
 
         //Nombre
-        inputName.setPromptText(list.get(name));
+        /*inputName.setPromptText(list.get(name));*/
 
         //Apellido
         inputLastname.setPromptText(list.get(lastname));
@@ -153,6 +152,7 @@ public class AddScene extends SetUp {
             counter++;
         }
     }
+
     /**
      * sets up all the buttons.
      */
@@ -169,6 +169,7 @@ public class AddScene extends SetUp {
         buttonsBox.add(addButton,0,0);
         buttonsBox.add(cancelButton,1,0);
     }
+
     /**
      * sets up the layout of the scene.
      */

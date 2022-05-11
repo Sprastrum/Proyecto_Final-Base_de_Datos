@@ -1,29 +1,23 @@
 package sample.logic.services;
 
-import com.mysql.cj.conf.DatabaseUrlContainer;
-import com.mysql.cj.jdbc.MysqlDataSource;
+import java.sql.*;
 
-import javax.sql.DataSource;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-
-public class Connection {
+public class Conexion {
     private static final String URL = "jdbc:mysql://localhost:3306/world";
+    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
     private static final String URL_USERNAME = "root";
     private static final String URL_PASSWORD = "1234";
-    private static Data dataSource;
+    private static Connection connection;
 
-    public static DataSource getDataSource() throws SQLException {
-        if(dataSource == null) {
-            dataSource = new MysqlDataSource();
-            dataSource.getConnection(URL_USERNAME, URL_PASSWORD);
+    public void connect() {
+        connection = null;
+        try{
+            Class.forName(DRIVER).newInstance();
+            connection = DriverManager.getConnection(URL, URL_USERNAME, URL_PASSWORD);
+            System.out.println("Success");
+        } catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException e) {
+            System.out.println(e);
         }
-        return dataSource;
-    }
-
-    public static Connection getConnection() throws SQLException {
-        return (Connection) getDataSource().getConnection();
     }
 
     public static void closeConnection(ResultSet resultSet) {
